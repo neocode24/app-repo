@@ -86,7 +86,13 @@ jobs:
           curl -Lo notation.tar.gz https://github.com/notaryproject/notation/releases/download/v1.0.0/notation_1.0.0_linux_amd64.tar.gz
           tar xvzf notation.tar.gz
           sudo mv notation /usr/local/bin/
-      
+
+      - name: Install Notation Azure KV Plugin
+        run: |
+          notation plugin install \
+            --type binary \
+            --artifact ghcr.io/deislabs/notation-azure-kv/plugin/notation-azure-kv:latest
+                
       - name: 이미지 서명
         run: |
           # Azure Key Vault에서 서명 키 가져오기
