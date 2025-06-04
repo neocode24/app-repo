@@ -2,6 +2,7 @@
 name: CI/CD 파이프라인
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
     paths-ignore:
