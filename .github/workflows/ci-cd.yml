@@ -90,7 +90,8 @@ jobs:
       - name: Notation Azure KV Plugin 설치
         run: |
           notation plugin install \
-            --artifact ghcr.io/deislabs/notation-azure-kv/plugin/notation-azure-kv:latest
+            --url https://github.com/Azure/notation-azure-kv/releases/download/v1.2.1/notation-azure-kv_1.2.1_linux_amd64.tar.gz \
+            --sha256sum 67c5ccaaf28dd44d2b6572684d84e344a02c2258af1d65ead3910b3156d3eaf5
 
       - name: 이미지 서명
         run: |
