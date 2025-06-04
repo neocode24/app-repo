@@ -83,8 +83,7 @@ jobs:
       
       - name: Notation 설치
         run: |
-          curl -Lo notation.tar.gz https://github.com/notaryproject/notation/releases/download/v1.0.0/notation_1.0.0_linux_amd64.tar.gz
-          tar xvzf notation.tar.gz
+          curl -sL https://github.com/notaryproject/notation/releases/latest/download/notation-linux-amd64.tar.gz | tar xz
           sudo mv notation /usr/local/bin/
 
       - name: Notation Azure KV Plugin 설치
