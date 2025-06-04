@@ -74,6 +74,7 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
       
       - name: Docker 빌드 및 푸시
+        id: build-and-push
         uses: docker/build-push-action@v4
         with:
           context: .
@@ -117,7 +118,7 @@ jobs:
 
           # 서명 실행
           notation sign --signature-format cose \
-            ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}@${{ steps.meta.outputs.digest }} \
+            ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }} \
             --plugin azure-kv \
             --id $KEY_ID \
             --plugin-config key_name=notation-cert \
