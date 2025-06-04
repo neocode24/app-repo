@@ -87,12 +87,11 @@ jobs:
           tar xvzf notation.tar.gz
           sudo mv notation /usr/local/bin/
 
-      - name: Install Notation Azure KV Plugin
+      - name: Notation Azure KV Plugin 설치
         run: |
           notation plugin install \
-            --type binary \
             --artifact ghcr.io/deislabs/notation-azure-kv/plugin/notation-azure-kv:latest
-                
+
       - name: 이미지 서명
         run: |
           # Azure Key Vault에서 서명 키 가져오기
