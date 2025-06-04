@@ -99,10 +99,12 @@ jobs:
           az keyvault secret download --name notation-key --vault-name ${{ secrets.KEY_VAULT_NAME }} --file notation.key
           
           # 서명 키 등록
-          notation key add acr-key --plugin azure-kv --id ${{ secrets.KEY_ID }}
+          notation key add acr-key --plugin azure-kv --id ${{ secrets.KEY_ID }} --default
           
           # 이미지 서명
-          notation sign ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}@${{ steps.meta.outputs.digest }}
+          notation sign ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}@${{ steps.meta.outputs.digest }} \
+            --plugin azure-kv \
+            --plugin-config self_signed=true
       
       - name: 이미지 태그 저장
         id: image-tag
