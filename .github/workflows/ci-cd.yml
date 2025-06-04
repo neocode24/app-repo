@@ -13,7 +13,7 @@ on:
 
 env:
   ACR_NAME: acraz01edu01
-  IMAGE_NAME: neocode24/myapp
+  IMAGE_NAME: edu00/myapp
   GITOPS_REPO: neocode24/gitops-repo
   GITOPS_APP_PATH: apps/myapp/overlays
 
