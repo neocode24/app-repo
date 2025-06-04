@@ -82,49 +82,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
       
-      - name: Notation 설치
-        run: |
-          curl -Lo notation.tar.gz https://github.com/notaryproject/notation/releases/download/v1.3.2/notation_1.3.2_linux_amd64.tar.gz
-          tar xvzf notation.tar.gz
-          sudo mv notation /usr/local/bin/
-
-      - name: Notation Azure KV Plugin 설치
-        run: |
-          notation plugin install \
-            --url https://github.com/Azure/notation-azure-kv/releases/download/v1.2.1/notation-azure-kv_1.2.1_linux_amd64.tar.gz \
-            --sha256sum 67c5ccaaf28dd44d2b6572684d84e344a02c2258af1d65ead3910b3156d3eaf5
-
-      - name: 이미지 서명
-        run: |
-          # 인증서 다운로드
-          az keyvault certificate download \
-            --name notation-cert \
-            --vault-name ${{ secrets.KEY_VAULT_NAME }} \
-            --file notation-cert.pem
-
-          # 키 ID 추출
-          KEY_ID=$(az keyvault certificate show \
-            --name notation-cert \
-            --vault-name ${{ secrets.KEY_VAULT_NAME }} \
-            --query 'kid' -o tsv)
-
-          # 키 등록
-          notation key add acr-key \
-            --plugin azure-kv \
-            --id $KEY_ID \
-            --default \
-            --plugin-config key_name=notation-cert \
-            --plugin-config vault_name=${{ secrets.KEY_VAULT_NAME }}
-
-          # 서명 실행
-          notation sign --signature-format cose \
-            ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }} \
-            --plugin azure-kv \
-            --id $KEY_ID \
-            --plugin-config key_name=notation-cert \
-            --plugin-config vault_name=${{ secrets.KEY_VAULT_NAME }} \
-            --plugin-config self_signed=true
-      
       - name: 이미지 태그 저장
         id: image-tag
         run: echo "tag=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
