@@ -1,0 +1,8 @@
+# .prettierignore
+.eslintrc.json
+src/math.js
+tests/integration/example.integration.test.js
+tests/unit/example.unit.test.js
+jest.unit.config.js
+jest.integration.config.js
+**/.github/workflows/*

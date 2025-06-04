@@ -1,0 +1,22 @@
+{
+  "name": "npm-hello-world",
+  "version": "1.0.0",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "jest --passWithNoTests --coverage",
+    "test:unit": "jest --config jest.unit.config.js",
+    "test:integration": "jest --config jest.integration.config.js",
+    "build": "mkdir -p dist && cp src/*.js dist/ && cp package.json dist/ && echo 'build step executed'",
+    "format": "prettier --write .",
+    "format:check": "prettier --check . "
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.27.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.1.0",
+    "jest": "^29.0.0",
+    "pg": "^8.16.0",
+    "prettier": "^3.5.3"
+  }
+}
