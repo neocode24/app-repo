@@ -117,8 +117,12 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add .
-          git commit -m "Update ${{ env.IMAGE_NAME }} image to ${{ needs.build-and-push-image.outputs.tag }}"
-          git push
+          if ! git diff --cached --quiet; then
+            git commit -m "Update ${{ env.IMAGE_NAME }} image to ${{ needs.build-and-push-image.outputs.tag }}"
+            git push
+          else
+            echo "No changes to commit."
+          fi
   
   trigger-argocd-sync:
     needs: update-gitops-repo
